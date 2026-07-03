@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <!-- Fondo azul de Windows 10 -->
+    <path
+        android:fillColor="#0078D7"
+        android:pathData="M0,0h200v200h-200z" />
+    <!-- Cuadrados del logo de Windows (4 rectángulos) -->
+    <!-- Arriba izquierda -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,40h50v50h-50z" />
+    <!-- Arriba derecha -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M110,40h50v50h-50z" />
+    <!-- Abajo izquierda -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,110h50v50h-50z" />
+    <!-- Abajo derecha -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M110,110h50v50h-50z" />
+</vector>
