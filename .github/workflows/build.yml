@@ -7,15 +7,28 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - name: 1. Descargar Código
+        uses: actions/checkout@v4
+
+      - name: 2. Configurar Java 17
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: gradle
-      - run: chmod +x gradlew && ./gradlew assembleDebug
-      - uses: actions/upload-artifact@v4
+
+      - name: 3. Compilar APK (Navegando a la carpeta del proyecto)
+        # Ajustamos la ruta para entrar en 'app' o la carpeta donde esté el gradlew
+        run: |
+          if [ -d "app" ]; then cd app; fi
+          if [ -d "aplicacion" ]; then cd aplicacion; fi
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: 4. Guardar APK Final
+        uses: actions/upload-artifact@v4
         with:
           name: AutoCloudPC-OS-APK
-          path: app/build/outputs/apk/debug/app-debug.apk
+          # Buscamos la APK en la ruta de salida generada
+          path: "**/app-debug.apk"
 
