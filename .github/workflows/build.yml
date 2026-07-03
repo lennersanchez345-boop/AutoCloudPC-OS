@@ -17,11 +17,23 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      - name: 3. Compilar APK (Navegando a la carpeta del proyecto)
-        # Ajustamos la ruta para entrar en 'app' o la carpeta donde esté el gradlew
+      - name: 3. Diagnóstico y Compilación
         run: |
-          if [ -d "app" ]; then cd app; fi
-          if [ -d "aplicacion" ]; then cd aplicacion; fi
+          echo "🔍 Buscando el archivo gradlew en el repositorio..."
+          GRADLEW_PATH=$(find . -name gradlew | head -n 1)
+          
+          if [ -z "$GRADLEW_PATH" ]; then
+            echo "❌ ERROR: No se encontró el archivo gradlew en ningún lugar del repositorio."
+            echo "Lista de archivos actuales:"
+            ls -R
+            exit 1
+          fi
+          
+          echo "✅ Archivo localizado en: $GRADLEW_PATH"
+          GRADLE_DIR=$(dirname "$GRADLEW_PATH")
+          cd "$GRADLE_DIR"
+          
+          echo "🚀 Iniciando compilación desde $GRADLE_DIR..."
           chmod +x gradlew
           ./gradlew assembleDebug
 
@@ -29,6 +41,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AutoCloudPC-OS-APK
-          # Buscamos la APK en la ruta de salida generada
           path: "**/app-debug.apk"
-
